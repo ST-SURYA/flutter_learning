@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/widget/input/textfield.dart';
 
 class Child2 extends StatefulWidget {
   final int count;
@@ -45,15 +46,20 @@ class _Child2State extends State<Child2> {
             Row(
               children: [
                 Expanded(
-                  child: TextField(
+                  child: CommonTextField(
                     controller: _controller,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Enter new count',
-                    ),
-                    onChanged: _updateCount,
+                    hintText: "Enter new count",
+                    onChange: _updateCount,
                   ),
+                  // TextField(
+                  //   controller: _controller,
+                  //   keyboardType: TextInputType.number,
+                  //   decoration: const InputDecoration(
+                  //     border: OutlineInputBorder(),
+                  //     labelText: 'Enter new count',
+                  //   ),
+                  //   onChanged: _updateCount,
+                  // ),
                 ),
                 const SizedBox(width: 10),
                 Text(

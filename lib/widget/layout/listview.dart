@@ -12,7 +12,7 @@ class ListViewExample extends StatelessWidget {
             title: Text('Item $index'),
             subtitle: Text('Subtitle for Item $index'),
             onTap: () {
-              print('Item $index tapped');
+              print("media" + MediaQuery.of(context).size.width.toString());
             },
           );
         }),
