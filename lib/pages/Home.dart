@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/sample.dart';
 import 'package:flutter_application_1/widget/Theme/Theme.dart';
 import 'package:flutter_application_1/widget/layout/listview.dart';
+import 'package:flutter_application_1/widget/menu.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -17,9 +18,10 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _isLocationOn = false;
 
   void _incrementCounter() {
-    setState(() {
-      _counter = _counter + 2;
-    });
+    // setState(() {
+    //   _counter = _counter + 2;
+    // });
+    Navigator.pushNamed(context, "dashboard");
   }
 
   @override
@@ -51,9 +53,13 @@ class _MyHomePageState extends State<MyHomePage> {
       // endDrawer: Drawer(
       //   child: ListViewExample(),
       // ),
-      drawer: Drawer(
-        child: ListViewExample(),
-      ),
+      // drawer: Drawer(
+      //   child: Padding(
+      //     padding:
+      //         const EdgeInsets.only(top: 50.0), // Add padding above the menu
+      //     child: Menu(),
+      //   ),
+      // ),
       body: SingleChildScrollView(
           // Wrap body in SingleChildScrollView to allow scrolling
           child: Stack(

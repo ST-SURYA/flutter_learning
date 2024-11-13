@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/Home.dart';
+import 'package:flutter_application_1/pages/dashboard.dart';
+import 'package:flutter_application_1/pages/login.dart';
+import 'package:flutter_application_1/pages/tabDemo.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ThemeModel extends StatefulWidget {
@@ -35,8 +38,8 @@ class _ThemeModel extends State<ThemeModel> {
               seedColor: const Color.fromARGB(255, 58, 169, 183),
               brightness: Brightness.light,
             ),
-            textTheme:
-                GoogleFonts.dancingScriptTextTheme(Theme.of(context).textTheme),
+            // textTheme:
+            //     GoogleFonts.dancingScriptTextTheme(Theme.of(context).textTheme),
             brightness: Brightness.light,
             useMaterial3: true,
           ),
@@ -49,7 +52,12 @@ class _ThemeModel extends State<ThemeModel> {
             useMaterial3: true,
           ),
           themeMode: _themeMode,
-          home: const MyHomePage(title: 'Flutter Home Page'),
+          routes: {
+            'dashboard': (context) => Dashboard(),
+            'home': (context) => MyHomePage(title: "Flutter"),
+            'tab': (context) => TabBarDemo(),
+          },
+          home: Login(),
         )));
   }
 }

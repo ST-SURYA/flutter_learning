@@ -1,36 +1,31 @@
 import 'package:flutter/material.dart';
 
 class CommonTextField extends StatelessWidget {
-  final String hintText;
   final TextEditingController controller;
+  final String hintText;
+  final Function(String) onChange;
+  final String? Function(String?)? validator;
   final bool obscureText;
-  final TextInputType keyboardType;
-  final ValueChanged<String> onChange;
 
   const CommonTextField({
-    Key? key,
-    required this.hintText,
     required this.controller,
+    required this.hintText,
     required this.onChange,
+    this.validator,
     this.obscureText = false,
-    this.keyboardType = TextInputType.text,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
-      obscureText: obscureText,
-      keyboardType: keyboardType,
       decoration: InputDecoration(
         hintText: hintText,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        border: OutlineInputBorder(),
       ),
       onChanged: onChange,
+      obscureText: obscureText,
+      validator: validator,
     );
   }
 }
