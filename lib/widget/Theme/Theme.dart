@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/pages/Home.dart';
-import 'package:flutter_application_1/pages/dashboard.dart';
-import 'package:flutter_application_1/pages/login.dart';
-import 'package:flutter_application_1/pages/tabDemo.dart';
+import 'package:flutter_application_1/pages/login/view.dart';
+import 'package:flutter_application_1/router/router.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ThemeModel extends StatefulWidget {
-  // final Widget child;
-
   const ThemeModel({
     super.key,
-    // required this.child,
   });
 
   @override
@@ -31,15 +27,13 @@ class _ThemeModel extends State<ThemeModel> {
     return (ThemeContext(
         themeMode: _themeMode,
         changeTheme: changeTheme,
-        child: MaterialApp(
+        child: GetMaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
               seedColor: const Color.fromARGB(255, 58, 169, 183),
               brightness: Brightness.light,
             ),
-            // textTheme:
-            //     GoogleFonts.dancingScriptTextTheme(Theme.of(context).textTheme),
             brightness: Brightness.light,
             useMaterial3: true,
           ),
@@ -52,12 +46,8 @@ class _ThemeModel extends State<ThemeModel> {
             useMaterial3: true,
           ),
           themeMode: _themeMode,
-          routes: {
-            'dashboard': (context) => Dashboard(),
-            'home': (context) => MyHomePage(title: "Flutter"),
-            'tab': (context) => TabBarDemo(),
-          },
-          home: Login(),
+          initialRoute: Routes.login,
+          getPages: RouterManagement.getPages(),
         )));
   }
 }
