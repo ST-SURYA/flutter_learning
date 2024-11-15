@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/router/router.dart';
+import 'package:flutter_application_1/util/local_storeage.dart';
 import 'package:get/get.dart';
 
 class ApiService {
@@ -12,8 +13,10 @@ class ApiService {
   ApiService._internal() {
     dio.interceptors.add(
       InterceptorsWrapper(
-        onRequest: (options, handler) {
+        onRequest: (options, handler) async {
           print('Request: ${options.method} ${options.path}');
+          final token = await LocalStorage.getData("accessToken", String);
+          options.headers['Authorization'] = 'Bearer $token';
           return handler.next(options); // continue
         },
         onResponse: (response, handler) {

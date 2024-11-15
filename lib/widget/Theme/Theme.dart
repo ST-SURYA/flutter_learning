@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/login/view.dart';
 import 'package:flutter_application_1/router/router.dart';
+import 'package:flutter_application_1/util/local_storeage.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeModel extends StatefulWidget {
   const ThemeModel({
@@ -15,6 +17,14 @@ class ThemeModel extends StatefulWidget {
 
 class _ThemeModel extends State<ThemeModel> {
   ThemeMode _themeMode = ThemeMode.light;
+  String? _initialRoute;
+
+  Future<void> _checkToken() async {
+    final token = await LocalStorage.getData("accessToken", String);
+    setState(() {
+      _initialRoute = token != null ? Routes.dashboard : Routes.login;
+    });
+  }
 
   void changeTheme(ThemeMode themeMode) {
     setState(() {
@@ -23,32 +33,42 @@ class _ThemeModel extends State<ThemeModel> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _checkToken(); // Check token on app launch
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return (ThemeContext(
-        themeMode: _themeMode,
-        changeTheme: changeTheme,
-        child: GetMaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 58, 169, 183),
-              brightness: Brightness.light,
+    print(_initialRoute);
+    return _initialRoute == null
+        ? Center(child: CircularProgressIndicator())
+        : ThemeContext(
+            themeMode: _themeMode,
+            changeTheme: changeTheme,
+            child: GetMaterialApp(
+              title: 'Flutter Demo',
+              theme: ThemeData(
+                colorScheme: ColorScheme.fromSeed(
+                  seedColor: const Color.fromARGB(255, 58, 169, 183),
+                  brightness: Brightness.light,
+                ),
+                brightness: Brightness.light,
+                useMaterial3: true,
+              ),
+              darkTheme: ThemeData(
+                colorScheme: ColorScheme.fromSeed(
+                  seedColor: const Color.fromARGB(255, 58, 169, 183),
+                  brightness: Brightness.dark,
+                ),
+                brightness: Brightness.dark,
+                useMaterial3: true,
+              ),
+              themeMode: _themeMode,
+              initialRoute: _initialRoute, // Set initialRoute based on token
+              getPages: RouterManagement.getPages(),
             ),
-            brightness: Brightness.light,
-            useMaterial3: true,
-          ),
-          darkTheme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 58, 169, 183),
-              brightness: Brightness.dark,
-            ),
-            brightness: Brightness.dark,
-            useMaterial3: true,
-          ),
-          themeMode: _themeMode,
-          initialRoute: Routes.login,
-          getPages: RouterManagement.getPages(),
-        )));
+          );
   }
 }
 

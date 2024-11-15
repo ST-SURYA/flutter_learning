@@ -1,6 +1,7 @@
 import 'package:flutter_application_1/pages/login/login_service.dart';
 import 'package:flutter_application_1/router/router.dart';
 import 'package:flutter_application_1/util/api_servises.dart';
+import 'package:flutter_application_1/util/local_storeage.dart';
 import 'package:flutter_application_1/widget/common/snackbar.dart';
 import 'package:get/get.dart';
 
@@ -23,5 +24,13 @@ class LoginController extends GetxController {
         );
       }
     }
+  }
+
+  Future<bool> isLoggedIn() async {
+    final token = await LocalStorage.getData("accessToken", String) as String?;
+    if (token == null) {
+      return false;
+    }
+    return true;
   }
 }

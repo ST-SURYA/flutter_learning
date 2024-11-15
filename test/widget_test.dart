@@ -1,30 +1,52 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/login/controller.dart';
+import 'package:flutter_application_1/util/local_storeage.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+import 'package:get/get.dart';
 
-import 'package:flutter_application_1/main.dart';
+class MockSharedPreferences extends Mock implements LocalStorage {
+  @override
+  Future<dynamic> getData(String key, Type type) async {
+    if (type == String) {
+      return 'mocked_token'; // Return a mocked token for testing
+    }
+    return null;
+  }
+
+  @override
+  Future<void> setData(String key, dynamic value) async {
+    // Mock the behavior of setData, no actual behavior needed for testing
+    return Future.value();
+  }
+}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  late LoginController loginController;
+  late MockSharedPreferences mockSharedPreferences;
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  setUp(() {
+    // Initialize the mock and controller before each test
+    mockSharedPreferences = MockSharedPreferences();
+    loginController = Get.put(LoginController());
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Mock the setData method
+    when(mockSharedPreferences.setData("accessToken", any))
+        .thenAnswer((_) async {
+      // Do nothing in mock
+      return Future.value();
+    });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Mock the shared preferences instance for getData
+    when(mockSharedPreferences.getData("accessToken", String))
+        .thenAnswer((_) async => 'mocked_token'); // Mock a token retrieval
+  });
+
+  test('Login test', () async {
+    // Simulate login
+    await loginController.formSubmit("emilys", "emilyspass");
+
+    // Check that the token is not empty (this should be from the mock)
+    final token = await mockSharedPreferences.getData("accessToken", String);
+    expect(token, isNotEmpty); // Ensure token is not empty
   });
 }

@@ -1,4 +1,5 @@
 import 'package:flutter_application_1/util/api_servises.dart';
+import 'package:flutter_application_1/util/local_storeage.dart';
 import 'package:get/get.dart';
 
 class LoginService {
@@ -13,7 +14,7 @@ class LoginService {
       isLoading.value = false;
       final String? token = response.data?["accessToken"];
       if (token!.isNotEmpty) {
-        apiService.setAccessToken(token!);
+        LocalStorage().setData("accessToken", token);
       }
       return response.data;
     } catch (e) {

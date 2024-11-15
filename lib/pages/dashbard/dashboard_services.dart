@@ -1,7 +1,4 @@
-import 'package:flutter_application_1/router/router.dart';
 import 'package:flutter_application_1/util/api_servises.dart';
-import 'package:flutter_application_1/widget/Theme/Theme.dart';
-import 'package:get/get.dart';
 
 class DashboardServices {
   final ApiService apiService = ApiService();

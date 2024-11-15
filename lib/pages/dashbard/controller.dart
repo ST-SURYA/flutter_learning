@@ -1,6 +1,7 @@
 import 'package:flutter_application_1/pages/dashbard/dashboard_services.dart';
 import 'package:flutter_application_1/router/router.dart';
 import 'package:flutter_application_1/util/api_servises.dart';
+import 'package:flutter_application_1/util/local_storeage.dart';
 import 'package:get/get.dart';
 
 class DashboardController extends GetxController {
@@ -21,7 +22,8 @@ class DashboardController extends GetxController {
   }
 
   Future<void> logoutUser() async {
+    await LocalStorage.clearAllData();
     ApiService().clearAccessToken();
-    await fetchUser();
+    Get.offAllNamed(Routes.login);
   }
 }

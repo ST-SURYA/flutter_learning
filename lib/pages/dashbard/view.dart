@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/dashbard/controller.dart';
+import 'package:flutter_application_1/pages/todo/view.dart';
+import 'package:flutter_application_1/router/router.dart';
 import 'package:get/get.dart';
 
 class Dashboard extends StatelessWidget {
@@ -38,6 +40,19 @@ class Dashboard extends StatelessWidget {
                   'Welcome, $username!',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
+              ),
+              const SizedBox(height: 20.0),
+              ListTile(
+                leading: Icon(Icons.task), // display in starting
+                trailing: IconButton(
+                  icon:
+                      const Icon(Icons.arrow_forward), // Icon on the right side
+                  onPressed: () {
+                    Get.toNamed(Routes.todo);
+                  },
+                ), // display in end
+                title: Text('Todo'),
+                subtitle: Text('Plan your work'),
               ),
             ],
           ),
