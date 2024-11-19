@@ -59,6 +59,7 @@ class TodoPage extends StatelessWidget {
                       },
                     ),
                     trailing: IconButton(
+                      key: Key('tododelete'),
                       icon: const Icon(Icons.delete),
                       onPressed: () => taskController.removeTask(task["id"]),
                     ),

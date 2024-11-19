@@ -14,8 +14,9 @@ class ApiService {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          print('Request: ${options.method} ${options.path}');
+          print('Request: ${options.method} ${options.path} ${options.uri}');
           final token = await LocalStorage.getData("accessToken", String);
+          print(token);
           options.headers['Authorization'] = 'Bearer $token';
           return handler.next(options); // continue
         },

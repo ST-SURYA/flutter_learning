@@ -45,6 +45,7 @@ class Dashboard extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.task), // display in starting
                 trailing: IconButton(
+                  key: Key('todoBtn'),
                   icon:
                       const Icon(Icons.arrow_forward), // Icon on the right side
                   onPressed: () {

@@ -16,7 +16,7 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Login"),
+        title: const Text(key: const Key('loginLabel'), "Login"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -27,10 +27,12 @@ class Login extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextField(
+                key: Key('email'),
                 controller: _emailController,
                 decoration: const InputDecoration(labelText: 'Email'),
               ),
               TextField(
+                key: Key('password'),
                 controller: _passwordController,
                 obscureText: true,
                 decoration: const InputDecoration(labelText: 'Password'),
@@ -40,6 +42,7 @@ class Login extends StatelessWidget {
                 return LoginService().isLoading.value
                     ? const CircularProgressIndicator()
                     : ElevatedButton(
+                        key: const Key('loginButton'),
                         onPressed: () {
                           _loginController.formSubmit(
                               _emailController.text, _passwordController.text);
