@@ -7,7 +7,7 @@ class ApiService {
   static final ApiService _instance = ApiService._internal();
   factory ApiService() => _instance;
 
-  final Dio dio = Dio(BaseOptions(baseUrl: "https://dummyjson.com"));
+  final Dio dio = Dio(BaseOptions(baseUrl: "http://192.168.1.191:3000"));
   String? _accessToken;
 
   ApiService._internal() {

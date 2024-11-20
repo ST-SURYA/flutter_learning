@@ -23,7 +23,7 @@ class TaskController extends GetxController {
   }
 
   // Toggle task status
-  void toggleTaskStatus(int id) async {
+  void toggleTaskStatus(String id) async {
     final task = tasks.firstWhere((item) => item['id'] == id);
 
     if (task != null) {
@@ -38,7 +38,7 @@ class TaskController extends GetxController {
     }
   }
 
-  void toggleEditing(int id, bool isEditing) {
+  void toggleEditing(String id, bool isEditing) {
     final task = tasks.firstWhere((item) => item['id'] == id);
     if (task != null) {
       task['isEditing'] = isEditing;
@@ -46,7 +46,7 @@ class TaskController extends GetxController {
     }
   }
 
-  void updateTask(int id, String newTitle) async {
+  void updateTask(String id, String newTitle) async {
     final task = tasks.firstWhere((item) => item['id'] == id);
     if (task != null) {
       task['todo'] = newTitle;
@@ -76,7 +76,7 @@ class TaskController extends GetxController {
   }
 
   // Remove task
-  void removeTask(int id) async {
+  void removeTask(String id) async {
     final isDeleted = await todoService.deleteTask(id);
     Snackbar.showSnackbar(
       title: 'TODO',

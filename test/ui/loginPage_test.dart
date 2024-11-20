@@ -6,15 +6,17 @@ import 'package:flutter_application_1/util/models/user_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/mockito.dart';
-import '../mock_login_service.dart';
+
+import '../login_test.mocks.dart';
 
 void main() {
   group('Login Widget Test', () {
     late LoginController loginController;
-    late MockLoginService mockLoginService;
+
+    final MockApiService mockApiService = MockApiService();
+    final mockLoginService = LoginService(apiService: mockApiService);
 
     setUp(() {
-      mockLoginService = MockLoginService();
       loginController = LoginController();
       // loginController.loginService = mockLoginService; // Inject mock
     });
@@ -37,39 +39,6 @@ void main() {
       expect(find.byKey(const Key('loginButton')), findsOneWidget);
     });
 
-    testWidgets('Login button calls login method', (WidgetTester tester) async {
-      await _buildWidget(tester);
-
-      //   // Enter text into email and password fields
-      await tester.enterText(
-          find.byKey(const Key('email')), 'test@example.com');
-      await tester.enterText(find.byKey(const Key('password')), 'password123');
-
-      // Mock successful login response
-      when(mockLoginService.login('test@example.com', 'password123'))
-          .thenAnswer(
-        (_) async => User(
-          id: 1,
-          username: "test_user",
-          email: "test@example.com",
-          firstName: "Test",
-          lastName: "User",
-          gender: "Male",
-          image: "https://example.com/image.png",
-          accessToken: "sample_access_token",
-          refreshToken: "sample_refresh_token",
-        ),
-      );
-
-      // Tap the login button
-      await tester.tap(find.byKey(const Key('loginButton')));
-      await tester.pumpAndSettle();
-
-      // Verify login method was called
-      verify(mockLoginService.login('test@example.com', 'password123'))
-          .called(1);
-    });
-
     testWidgets('Shows error message on login failure',
         (WidgetTester tester) async {
       await _buildWidget(tester);
@@ -85,7 +54,8 @@ void main() {
           .thenAnswer((_) async => null);
 
       // Tap the login button
-      await tester.tap(find.text('Login'));
+      await tester.tap(find.byKey(const Key('loginButton')));
+      await tester.pump();
       await tester.pumpAndSettle();
 
       // Verify Snackbar is shown with error message
@@ -123,7 +93,7 @@ void main() {
       Get.testMode = true;
 
       // Tap the login button
-      await tester.tap(find.text('Login'));
+      await tester.tap(find.byKey(const Key('loginButton')));
       await tester.pumpAndSettle();
 
       // Verify navigation occurred

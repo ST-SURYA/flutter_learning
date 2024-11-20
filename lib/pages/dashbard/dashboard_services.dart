@@ -4,7 +4,7 @@ class DashboardServices {
   final ApiService apiService = ApiService();
   Future<Map<String, dynamic>?> getUser() async {
     try {
-      final user = await apiService.dio.get("/auth/me");
+      final user = await apiService.dio.get("/users/1");
       return user.data;
     } catch (e) {
       print("Error on user : $e");

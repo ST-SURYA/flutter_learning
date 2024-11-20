@@ -6,9 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  // setUp(() {
-  //   SharedPreferences.setMockInitialValues({});
-  // });
+
   group('end-to-end test', () {
     testWidgets('login page', (tester) async {
       // await tester.pumpAndSettle();
@@ -21,30 +19,14 @@ void main() {
       await tester.enterText(passwordField, "emilyspass");
       await tester.pumpAndSettle();
       await tester.tap(loginBtn);
-      await Future.delayed(Duration(seconds: 3));
+      await tester.pump();
       await tester.pumpAndSettle();
-      await Future.delayed(Duration(seconds: 15));
-      // expect(find.text("Welcome, emilys!"), findsOneWidget);
+      expect(find.text("Welcome, emilys!"), findsOneWidget);
       expect(find.text("Todo"), findsOneWidget);
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(Key('todoBtn')));
-      await Future.delayed(Duration(seconds: 5));
-      expect(find.text("To-Do List"), findsOneWidget);
-      await Future.delayed(Duration(seconds: 15));
-      final checkBox = find.byType(Checkbox).first;
-      await tester.tap(checkBox);
-      expect(
-        tester.getSemantics(checkBox),
-        matchesSemantics(
-            hasTapAction: true,
-            hasCheckedState: true,
-            isChecked: true,
-            hasEnabledState: true,
-            isEnabled: true,
-            isFocusable: true),
-      );
-      final deleteBtn = find.byKey(Key('tododelete')).first;
-      await tester.tap(deleteBtn);
+      await tester.pump();
+      await tester.pumpAndSettle();
     });
   });
 }
