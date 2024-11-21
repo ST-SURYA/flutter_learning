@@ -15,11 +15,13 @@ class TodoPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
+              key: Key("addNewField"),
               controller: taskControllerInput,
               decoration: const InputDecoration(labelText: 'Add new task'),
             ),
           ),
           ElevatedButton(
+            key: Key("addNewBtn"),
             onPressed: () {
               if (taskControllerInput.text.isNotEmpty) {
                 taskController.addTask(taskControllerInput.text);
@@ -31,6 +33,7 @@ class TodoPage extends StatelessWidget {
           Expanded(
             child: Obx(
               () => ListView.builder(
+                key: Key("todolist"),
                 itemCount: taskController.tasks.length,
                 itemBuilder: (context, index) {
                   final task = taskController.tasks[index];

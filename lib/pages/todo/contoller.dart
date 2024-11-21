@@ -28,8 +28,7 @@ class TaskController extends GetxController {
 
     if (task != null) {
       task['completed'] = !(task['completed'] ?? false);
-      await todoService
-          .updateTask(id, {"completed": !(task['completed'] ?? false)});
+      await todoService.updateTask(id, {...task});
       Snackbar.showSnackbar(
         title: 'TODO',
         message: 'Status Updated',
@@ -50,7 +49,7 @@ class TaskController extends GetxController {
     final task = tasks.firstWhere((item) => item['id'] == id);
     if (task != null) {
       task['todo'] = newTitle;
-      await todoService.updateTask(id, {"todo": newTitle});
+      await todoService.updateTask(id, {...task, "todo": newTitle});
       task['isEditing'] = false;
       Snackbar.showSnackbar(
         title: 'TODO',
