@@ -1,5 +1,6 @@
 import 'package:flutter_application_1/pages/dashbard/view.dart';
 import 'package:flutter_application_1/pages/login/view.dart';
+import 'package:flutter_application_1/pages/profile/view.dart';
 import 'package:flutter_application_1/pages/todo/view.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +10,7 @@ class RouterManagement {
       GetPage(name: Routes.login, page: () => Login()),
       GetPage(name: Routes.dashboard, page: () => Dashboard()),
       GetPage(name: Routes.todo, page: () => TodoPage()),
+      GetPage(name: Routes.profile, page: () => ProfilePage()),
     ];
   }
 }
@@ -17,4 +19,5 @@ class Routes {
   static const login = "/login";
   static const dashboard = "/dashboard";
   static const todo = "/todo";
+  static const profile = "/profile";
 }

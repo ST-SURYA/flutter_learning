@@ -18,12 +18,16 @@ class Dashboard extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(
           title: Text(username),
-          leading: imageUrl != null
-              ? CircleAvatar(
-                  backgroundImage: NetworkImage(imageUrl),
-                  radius: 20,
-                )
-              : Icon(Icons.account_circle),
+          leading: GestureDetector(
+              onTap: () {
+                Get.toNamed(Routes.profile);
+              },
+              child: imageUrl != null
+                  ? CircleAvatar(
+                      backgroundImage: NetworkImage(imageUrl),
+                      radius: 20,
+                    )
+                  : Icon(Icons.account_circle)),
           actions: [
             IconButton(
                 onPressed: dashboardController.logoutUser,
